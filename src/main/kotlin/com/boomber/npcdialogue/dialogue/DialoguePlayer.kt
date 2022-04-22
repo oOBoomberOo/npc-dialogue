@@ -5,6 +5,7 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Formatting
 import kotlin.math.max
+import kotlin.math.min
 
 typealias Dialogues = Map<Int, Dialogue>
 
@@ -25,7 +26,7 @@ open class DialoguePlayer(
             speak(it)
         }
 
-        frame = max(frame + 1, maxFrame + 1)
+        frame = min(frame + 1, maxFrame + 1)
     }
 
     private fun speak(dialogue: Dialogue) {
