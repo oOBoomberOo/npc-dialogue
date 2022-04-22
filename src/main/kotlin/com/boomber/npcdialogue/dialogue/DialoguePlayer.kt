@@ -18,6 +18,7 @@ open class DialoguePlayer(
     private val current: Dialogue? get() = dialogues[frame]
 
     val hasStopped get() = frame == maxFrame + 1
+    val isPlaying get() = !hasStopped
 
     open fun tick() {
         current?.also {

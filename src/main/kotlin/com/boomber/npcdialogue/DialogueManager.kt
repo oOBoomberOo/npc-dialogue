@@ -15,15 +15,14 @@ object DialogueManager {
     var activeDialogues: MutableMap<UUID, DialoguePlayer> = mutableMapOf()
 
     fun tick(server: MinecraftServer) {
-        activeDialogues.forEach { (id, player) ->
-            player.tick()
+        activeDialogues.forEach { (_, player) -> player.tick() }
 
-            if (player.hasStopped) {
-                player.npc.ended()
-                activeDialogues.remove(id)
-                logger.info("stopped playing dialogue $player")
-            }
+        activeDialogues.filter { (_, player) -> player.hasStopped }.forEach { (_, player) ->
+            player.npc.ended()
+            logger.info("stopped playing dialogue $player")
         }
+
+        activeDialogues = activeDialogues.filter { it.value.isPlaying }.toMutableMap()
     }
 
     fun play(player: PlayerEntity, npc: IDialoguer, dialogues: Dialogues): Boolean {
