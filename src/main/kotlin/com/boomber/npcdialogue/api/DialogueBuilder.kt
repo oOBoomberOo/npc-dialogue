@@ -2,7 +2,9 @@ package com.boomber.npcdialogue.api
 
 import com.boomber.npcdialogue.dialogue.Dialogue
 import com.boomber.npcdialogue.dialogue.Dialogues
+import kotlinx.serialization.json.JsonNull.content
 import net.minecraft.text.Text
+import net.minecraft.text.TranslatableText
 
 class DialogueBuilder(content: Dialogue) {
     private var counter = 0
@@ -11,6 +13,10 @@ class DialogueBuilder(content: Dialogue) {
         Pair(counter, content)
     )
 
+    constructor(translation: String): this(Dialogue.of(translation))
+
+    constructor(text: Text): this(Dialogue.of(text))
+
     fun then(duration: Int, content: Dialogue): DialogueBuilder {
         dialogues[counter] = content
         counter += duration
@@ -18,7 +24,7 @@ class DialogueBuilder(content: Dialogue) {
     }
 
     fun then(duration: Int, content: Text) = then(duration, content = Dialogue.of(content))
-    fun then(duration: Int, content: String) = then(duration, content = Dialogue.of(content))
+    fun then(duration: Int, translation: String) = then(duration, content = Dialogue.of(translation))
 
     fun build(): Dialogues {
         return dialogues
