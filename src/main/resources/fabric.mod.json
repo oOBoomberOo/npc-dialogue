@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "npc-dialogue",
+  "version": "${version}",
+  "name": "NPC Dialogue",
+  "description": "Declarative Data-Driven NPC Dialogue System",
+  "authors": [
+    "Boomber"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/npc-dialogue/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.boomber.npcdialogue.NpcDialogue"
+    ]
+  },
+  "mixins": [
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.0",
+    "fabric": "*",
+    "minecraft": "1.18.2"
+  }
+}
