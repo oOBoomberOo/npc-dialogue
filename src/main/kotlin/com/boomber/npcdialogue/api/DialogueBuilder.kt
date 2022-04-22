@@ -6,16 +6,10 @@ import kotlinx.serialization.json.JsonNull.content
 import net.minecraft.text.Text
 import net.minecraft.text.TranslatableText
 
-class DialogueBuilder(content: Dialogue) {
+class DialogueBuilder() {
     private var counter = 0
 
-    private var dialogues: MutableMap<Int, Dialogue> = mutableMapOf(
-        Pair(counter, content)
-    )
-
-    constructor(translation: String): this(Dialogue.of(translation))
-
-    constructor(text: Text): this(Dialogue.of(text))
+    private var dialogues: MutableMap<Int, Dialogue> = mutableMapOf()
 
     fun then(duration: Int, content: Dialogue): DialogueBuilder {
         dialogues[counter] = content
@@ -24,7 +18,7 @@ class DialogueBuilder(content: Dialogue) {
     }
 
     fun then(duration: Int, content: Text) = then(duration, content = Dialogue.of(content))
-    fun then(duration: Int, translation: String) = then(duration, content = Dialogue.of(translation))
+    fun then(duration: Int, translation: String, vararg args: Any) = then(duration, content = TranslatableText(translation, *args))
 
     fun build(): Dialogues {
         return dialogues
