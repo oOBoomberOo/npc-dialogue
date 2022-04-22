@@ -25,14 +25,14 @@ object DialogueManager {
     }
 
     fun play(player: PlayerEntity, npc: Entity, dialogues: Dialogues): Boolean {
-        val current = activeDialogues[player.uuid]
+        val current = activeDialogues[npc.uuid]
 
         if (current != null) {
             logger.warn("$player already has an active dialogue: $current")
             return false
         }
 
-        activeDialogues[player.uuid] = DialoguePlayer(dialogues, player, npc)
+        activeDialogues[npc.uuid] = DialoguePlayer(dialogues, player, npc)
         logger.info("started playing dialogues for $player")
 
         return true
