@@ -1,6 +1,6 @@
 package com.boomber.npcdialogue.dialogue
 
-import net.minecraft.entity.Entity
+import com.boomber.npcdialogue.api.IDialoguer
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Formatting
@@ -11,7 +11,7 @@ typealias Dialogues = Map<Int, Dialogue>
 open class DialoguePlayer(
     val dialogues: Dialogues,
     val player: PlayerEntity,
-    private val npc: Entity,
+    val npc: IDialoguer,
 ) {
     private var frame = 0
     private val maxFrame = dialogues.maxOf { (frame, _) -> frame }
@@ -28,7 +28,7 @@ open class DialoguePlayer(
     }
 
     private fun speak(dialogue: Dialogue) {
-        val name = npc.name.copy().append(": ").styled { it.withColor(Formatting.GREEN) }
+        val name = npc.entity.name.copy().append(": ").styled { it.withColor(Formatting.GREEN) }
 
         val msg = name.append(dialogue.content)
         player.sendMessage(msg, false)

@@ -1,5 +1,6 @@
 package com.boomber.npcdialogue
 
+import com.boomber.npcdialogue.api.IDialoguer
 import com.boomber.npcdialogue.dialogue.DialoguePlayer
 import com.boomber.npcdialogue.dialogue.Dialogues
 import net.minecraft.entity.Entity
@@ -18,21 +19,25 @@ object DialogueManager {
             player.tick()
 
             if (player.hasStopped) {
+                player.npc.ended()
                 activeDialogues.remove(id)
                 logger.info("stopped playing dialogue $player")
             }
         }
     }
 
-    fun play(player: PlayerEntity, npc: Entity, dialogues: Dialogues): Boolean {
-        val current = activeDialogues[npc.uuid]
+    fun play(player: PlayerEntity, npc: IDialoguer, dialogues: Dialogues): Boolean {
+        val current = activeDialogues[npc.entity.uuid]
 
         if (current != null) {
             logger.warn("$player already has an active dialogue: $current")
             return false
         }
 
-        activeDialogues[npc.uuid] = DialoguePlayer(dialogues, player, npc)
+        activeDialogues[npc.entity.uuid] = DialoguePlayer(dialogues, player, npc).also {
+            npc.begun(player)
+        }
+
         logger.info("started playing dialogues for $player")
 
         return true
