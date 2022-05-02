@@ -30,9 +30,7 @@ open class DialoguePlayer(
     }
 
     private fun speak(dialogue: Dialogue) {
-        val name = npc.entity.name.copy().append(": ").styled { it.withColor(Formatting.GREEN) }
-
-        val msg = name.append(dialogue.content)
+        val msg = dialogue.content
         player.sendMessage(msg, false)
 
         dialogue.sounds
