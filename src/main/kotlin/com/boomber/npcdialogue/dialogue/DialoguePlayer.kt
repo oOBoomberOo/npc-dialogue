@@ -30,7 +30,7 @@ open class DialoguePlayer(
     }
 
     private fun speak(dialogue: Dialogue) {
-        val msg = dialogue.content
+        val msg = dialogue.content.shallowCopy().formatted(Formatting.GREEN)
         player.sendMessage(msg, false)
 
         dialogue.sounds
